@@ -30,10 +30,9 @@ require '../../includes/app.php';
     //Ejecutar el codigo despues de que el usuario envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
         //Asignar los atributos
-        $args = [] ;
-        $args['titulo'] = $_POST['titulo'] ?? null;
-        $args['precio'] = $_POST['precio'] ?? null;
+        $args = $_POST['propiedad'] ;
 
         $propiedad->sincronizar($args);
 
