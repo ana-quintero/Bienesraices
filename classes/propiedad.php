@@ -24,13 +24,11 @@ class Propiedad
     public $vendedorId;
 
     //Definir la conexion a la BD
-    public static function setDB($database)
-    {
+    public static function setDB($database){
         self::$db = $database;
     }
 
-    public function __construct($args = [])
-    {
+    public function __construct($args = []) {
         $this->id = $args['id'] ?? '';
         $this->titulo = $args['titulo'] ?? '';
         $this->precio = $args['precio'] ?? '';
@@ -93,6 +91,18 @@ class Propiedad
         }
     }
 
+    //Eliminar un registro
+    public function eliminar() {
+        //Elimina la propiedad
+        $query = "DELETE FROM propiedades WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
+        $resultado = self::$db->query($query);
+
+        if($resultado) {
+            $this->borrarImagen();
+            header( 'Location: /admin?resultado=3');
+        }
+    }
+
     //Identifica y une los atributos de la BD
     public function atributos() {
         $atributos = [];
@@ -119,16 +129,21 @@ class Propiedad
         //Elimina la imagen previa
 
         if(isset( $this->id) ) {
-            //Comprobar si el archivo existe
-            $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
-            if($existeArchivo) {
-                unlink(CARPETA_IMAGENES . $this->imagen);
-            }
+            $this->borrarImagen();
         }
 
         //Asignar al atributo de imagen el nombre de la imagen
         if ($imagen) {
             $this->imagen = $imagen;
+        }
+    }
+
+    //Elimina el archivo
+    public function borrarImagen() {
+        //Comprobar si el archivo existe
+        $existeArchivo = file_exists(CARPETA_IMAGENES . $this->imagen);
+        if($existeArchivo) {
+            unlink(CARPETA_IMAGENES . $this->imagen);
         }
     }
 
