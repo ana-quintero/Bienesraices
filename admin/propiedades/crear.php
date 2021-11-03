@@ -25,7 +25,7 @@
         /** Crea una nueva instancia */
         $propiedad = new Propiedad($_POST['propiedad']);
 
-        debuguear($propiedad);
+        
 
         /** SUBIDA DE ARCHVOS */
         //Generar un nombre único
@@ -39,10 +39,10 @@
         }
         //Validar
         $errores = $propiedad->validar();
+
                 
         if (empty($errores)) {
             
-
             //Crear carpeta para subir imagenes
             $carpetaImagenes = '../../imagenes/';
             //Si no existe la carpeta imagenes, la creamos
@@ -54,14 +54,10 @@
             $image->save( CARPETA_IMAGENES . $nombreImagen );
 
             //Guarda en la base de datos
-            $resultado = $propiedad->guardar();
+            $propiedad->guardar();
 
 
-            //Mensaje de exito
-            if ($resultado) {
-                //Redireccionar al usuario
-                header('Location: /admin?resultado=1');
-            }
+            
         }
     }
 
