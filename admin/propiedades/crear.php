@@ -28,8 +28,6 @@
         debuguear($propiedad);
 
         /** SUBIDA DE ARCHVOS */
-        
-
         //Generar un nombre único
         $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
 

@@ -26,7 +26,6 @@ require '../../includes/app.php';
     //Arreglo con mensajes de errores
     $errores = Propiedad::getErrores();
 
-
     //Ejecutar el codigo despues de que el usuario envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -35,11 +34,9 @@ require '../../includes/app.php';
 
         $propiedad->sincronizar($args);
 
-
         //Validacion
         $errores = $propiedad->validar();
 
-        
         //Subida de archivos
         //Generar un nombre único
         $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
@@ -48,37 +45,15 @@ require '../../includes/app.php';
             $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800,600);
             $propiedad->setImagen($nombreImagen);
         }
-
-        debuguear($propiedad);
-
         if(empty($errores)) {
+            //Almacenar la imagen 
+            $image->save(CARPETA_IMAGENES . $nombreImagen);
 
-
-
-            exit;
-
-            //Insertar en la Base de Datos
-            $query = " UPDATE propiedades SET titulo = '${titulo}', precio = '${precio}', imagen = '${nombreImagen}', descripcion = '${descripcion}', habitaciones = ${habitaciones}, wc = ${wc}, estacionamiento = ${estacionamiento}, vendedorId = ${vendedorId} WHERE id = ${id} ";
-
-            //echo $query;
-
-
-            $resultado = mysqli_query($db, $query);
-
-            if ($resultado) {
-                //Redireccionar al usuario
-                header('Location: /admin?resultado=2');
-            }
+            $propiedad->guardar();   
         }
-
-
-
     }
-
-
-    
     incluirTemplate('header');
-    ?>
+?>
 
 
     <main class="contenedor seccion">
