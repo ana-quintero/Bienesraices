@@ -12,14 +12,10 @@ class ActiveRecord {
     //Errores 
     protected static $errores = [];
 
-    
-
     //Definir la conexion a la BD
     public static function setDB($database){
         self::$db = $database;
     }
-
-    
 
     public function guardar() {
        
@@ -92,7 +88,7 @@ class ActiveRecord {
     //Identifica y une los atributos de la BD
     public function atributos() {
         $atributos = [];
-        foreach(self::$columnasDB  as $columna) {
+        foreach(static::$columnasDB  as $columna) {
             if($columna === 'id') continue;
             $atributos[$columna] = $this->$columna;
         }
@@ -170,7 +166,7 @@ class ActiveRecord {
             //Iterar los resultados
             $array = [];
             while ($registro = $resultado->fetch_assoc()) {
-                $array[] = self::crearObjeto($registro);
+                $array[] = static::crearObjeto($registro);
             }
 
             //Liberar la memoria 
@@ -202,4 +198,5 @@ class ActiveRecord {
             }
         }
 }
+
 
