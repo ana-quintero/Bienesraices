@@ -56,8 +56,6 @@
             //Guarda en la base de datos
             $propiedad->guardar();
 
-
-            
         }
     }
 
