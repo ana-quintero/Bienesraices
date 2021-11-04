@@ -6,41 +6,20 @@ class ActiveRecord {
 
     //Base de Datos
     protected static $db;
-    protected static $columnasDB = ['id', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'estacionamiento', 'creado', 'vendedorId'];
+    protected static $columnasDB = [];
     protected static $tabla = '';
 
     //Errores 
     protected static $errores = [];
 
-    public $id;
-    public $titulo;
-    public $precio;
-    public $imagen;
-    public $descripcion;
-    public $habitaciones;
-    public $wc;
-    public $estacionamiento;
-    public $creado;
-    public $vendedorId;
+    
 
     //Definir la conexion a la BD
     public static function setDB($database){
         self::$db = $database;
     }
 
-    public function __construct($args = []) 
-    {
-        $this->id = $args['id'] ?? null;
-        $this->titulo = $args['titulo'] ?? '';
-        $this->precio = $args['precio'] ?? '';
-        $this->imagen = $args['imagen'] ?? '';
-        $this->descripcion = $args['descripcion'] ?? '';
-        $this->habitaciones = $args['habitaciones'] ?? '';
-        $this->wc = $args['wc'] ?? '';
-        $this->estacionamiento = $args['estacionamiento'] ?? '';
-        $this->creado = date('Y/m/d');
-        $this->vendedorId = $args['vendedorId'] ?? 1;
-    }
+    
 
     public function guardar() {
        
@@ -236,7 +215,7 @@ class ActiveRecord {
         }
 
         protected static function crearObjeto($registro) {
-            $objeto = new self;
+            $objeto = new static;
 
             foreach($registro as $key => $value) {
                 if(property_exists( $objeto, $key )) {
