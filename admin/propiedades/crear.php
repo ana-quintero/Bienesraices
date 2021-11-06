@@ -59,7 +59,7 @@
 
 
     incluirTemplate('header');
-    ?>
+?>
 
 
     <main class="contenedor seccion">
@@ -81,6 +81,6 @@
         </form>
     </main>
 
-    <?php
+<?php
     incluirTemplate('footer');
 ?>
