@@ -32,10 +32,10 @@
 
         <?php endforeach; ?>
 
-        <form class="formulario" method="POST" action="/admin/vendedores/actualizar.php">
+        <form class="formulario" method="POST">
             <?php include '../../includes/templates/formulario_vendedores.php'; ?>
 
-            <input type="submit" value="Actualizar Vendedor(a)" class="boton boton-verde">
+            <input type="submit" value="Guardar Cambios" class="boton boton-verde">
         </form>
     </main>
 
