@@ -1,19 +1,41 @@
 <?php
 
     require '../../includes/app.php';
-
     use App\Vendedor;
-
     estaAutenticado();
 
-    $vendedor = new Vendedor;
+    //Validar que sea un Id Válido
+
+    $id = $_GET['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if(!$id) {
+        header('Location: /admin');
+    }
+
+    //Obtener el arreglo del vendedor desde la base de datos
+    $vendedor = Vendedor::find($id);
 
     //Arreglo con mensajes de errores
     $errores = Vendedor::getErrores();
 
     //Ejecutar el codigo despues de que el usuario envia el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     
+
+        //Asignar los valores
+        $args = $_POST['vendedor'];
+
+        //SWincronizar objeto en memoria con lo que el usuario escribio
+        $vendedor->sincronizar($args);
+
+        //Validación
+        $errores = $vendedor->validar();
+
+        //Si no hay errores
+        if(empty($errores)) {
+            $vendedor->guardar();
+        }
+
     }
     
     incluirTemplate('header');
